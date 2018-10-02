@@ -1,4 +1,4 @@
-# yt-mp3-download
+# Youtube-MP3 Converter
 Convert YouTube videos to MP3
 
 # Requirements
