@@ -1,0 +1,77 @@
+#!/usr/bin/python
+
+from __future__ import unicode_literals
+
+# must be already installed
+import youtube_dl
+# args
+import sys
+# http requests
+import urllib2
+# xml parser
+from xml.dom.minidom import parseString
+
+
+class Debugger(object):
+    def debug(self, msg):
+        pass
+
+    def warning(self, msg):
+        pass
+
+    def error(self, msg):
+        print(msg)
+
+
+def progress(d):
+    if d['status'] == 'finished':
+        print('Video downloaded, processing ...')
+
+
+ydl_opts = {
+    'format': 'bestaudio/best',
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
+    'logger': Debugger(),
+    'progress_hooks': [progress],
+}
+
+
+def dl(video):
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download(["https://youtube.com/watch?v=" + video])
+
+
+def videoDl(videos):
+    for video in videos.split(','):
+        dl(video)
+
+
+def playlist(slug):
+    playListUrl = "https://www.youtube.com/feeds/videos.xml?playlist_id="
+    file = urllib2.urlopen(playListUrl+slug)
+    data = file.read()
+    file.close()
+    dom = parseString(data)
+    entry = dom.getElementsByTagName('entry')
+    for node in entry:
+        video = node.getElementsByTagName('yt:videoId')[0].firstChild.nodeValue
+        title = node.getElementsByTagName('title')[0].firstChild.nodeValue
+        dl(video)
+
+
+# entry point
+if len(sys.argv) > 1:
+    for arg in sys.argv:
+        if arg in ['-h', '--help']:
+            print('-p <playlist slug> \n\t>Download a playlist\n\n')
+            print(
+                "-v <video1 slug,video2 slug> \n\t>Download one or many videos separated with comma\n\n")
+            exit(0)
+        if arg in ['-p', '--playlist']:
+            playlist(sys.argv[2])
+        if arg in ['-v', '--videos']:
+            videoDl(sys.argv[2])
