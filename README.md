@@ -3,6 +3,7 @@ Convert YouTube videos to MP3
 
 # Requirements
 1. Download `ytube` file to your preferred location where you want MP3s downloaded
+1. Install python if you don't have it already `sudo apt-get install python`
 1. Install `ffmpeg` `sudo apt-get install ffmpeg`
 1. Install `youtube-dl` `sudo -H pip install --upgrade youtube-dl`. See https://github.com/rg3/youtube-dl
 
