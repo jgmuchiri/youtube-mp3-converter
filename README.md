@@ -33,8 +33,6 @@ youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 YOUTUBE_VIDEO
 
 `-c` - continue
 
-`-t` - use video title as file name
-
 `--extract-audio` - extract audio track
 
 `--audio-format mp3` - convert to mp3
@@ -45,13 +43,13 @@ youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 YOUTUBE_VIDEO
 
 ```bash
 # Basic download
-youtube-dl -ict --yes-playlist --extract-audio --audio-format mp3 --audio-quality 0 YOUTUBE_PLAYLIST_LINK
+youtube-dl -ic -o "%(title)s.%(ext)s" --yes-playlist --extract-audio --audio-format mp3 --audio-quality 0 YOUTUBE_PLAYLIST_LINK
 
 # Log successful downloads to text file
-youtube-dl --download-archive downloads.txt --no-overwrites -ict --yes-playlist --extract-audio --audio-format mp3 --audio-quality 0 --socket-timeout 5 YOUTUBE_PLAYLIST_LINK
+youtube-dl --download-archive downloads.txt --no-overwrites -ic  -o "%(title)s-%(id)s.%(ext)s" --yes-playlist --extract-audio --audio-format mp3 --audio-quality 0 --socket-timeout 5 YOUTUBE_PLAYLIST_LINK
 
 # -i option to ignore errors keep trying until success
-while ! youtube-dl --download-archive downloaded.txt --no-overwrites -ct --yes-playlist --extract-audio --audio-format mp3 --audio-quality 0 --socket-timeout 5 YOUTUBE_PLAYLIST_LINK; do echo DISCONNECTED; sleep 5; done
+while ! youtube-dl --download-archive downloaded.txt --no-overwrites -c -o "%(title)s-%(ext)s" --yes-playlist --extract-audio --audio-format mp3 --audio-quality 0 --socket-timeout 5 YOUTUBE_PLAYLIST_LINK; do echo DISCONNECTED; sleep 5; done
 ```
 
 ### Disclaimer
