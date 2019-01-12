@@ -19,6 +19,7 @@ Convert YouTube videos to MP3
 
 * [ ] Skip duplicates
 * [ ] Error recovery
+* [ ] Clean file naming
 
 ### Disclaimer
 This is tool is for educational use only. YouTube videos are copyrights of their owners and/or Youtube.com. This tool might be restricted to use in some countries.
