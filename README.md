@@ -21,5 +21,38 @@ Convert YouTube videos to MP3
 * [ ] Error recovery
 * [ ] Clean file naming
 
+# Other methods of downloading MP3 using youtube-dl only
+
+## Downloading single file
+```bash
+youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 YOUTUBE_VIDEO_LINK
+```
+
+## Downling playlist
+`-i` - ignore errors
+
+`-c` - continue
+
+`-t` - use video title as file name
+
+`--extract-audio` - extract audio track
+
+`--audio-format mp3` - convert to mp3
+
+`--audio-quality 0` - the best audio quality
+
+`--yes-playlist` - affirm that url points to a playlist
+
+```bash
+# Basic download
+youtube-dl -ict --yes-playlist --extract-audio --audio-format mp3 --audio-quality 0 YOUTUBE_PLAYLIST_LINK
+
+# Log successful downloads to text file
+youtube-dl --download-archive downloads.txt --no-overwrites -ict --yes-playlist --extract-audio --audio-format mp3 --audio-quality 0 --socket-timeout 5 YOUTUBE_PLAYLIST_LINK
+
+# -i option to ignore errors keep trying until success
+while ! youtube-dl --download-archive downloaded.txt --no-overwrites -ct --yes-playlist --extract-audio --audio-format mp3 --audio-quality 0 --socket-timeout 5 YOUTUBE_PLAYLIST_LINK; do echo DISCONNECTED; sleep 5; done
+```
+
 ### Disclaimer
 This is tool is for educational use only. YouTube videos are copyrights of their owners and/or Youtube.com. This tool might be restricted to use in some countries.
